@@ -1,0 +1,83 @@
+x-airflow-variables: &airflow-variables
+  AIRFLOW_DATABASE_NAME: airflow
+  AIRFLOW_DATABASE_USERNAME: airflow_user
+  AIRFLOW_DATABASE_PASSWORD: airflow_password
+  AIRFLOW_USERNAME: admin
+  AIRFLOW_PASSWORD: admin
+  AIRFLOW_LOAD_EXAMPLES: no
+  AIRFLOW_SECRET_KEY: 46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho=
+
+services:
+  postgresql:
+    image: docker.io/bitnami/postgresql
+    volumes:
+      - 'postgresql_data:/bitnami/postgresql'
+    environment:
+      - POSTGRESQL_DATABASE=airflow
+      - POSTGRESQL_USERNAME=airflow_user
+      - POSTGRESQL_PASSWORD=airflow_password
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      - ALLOW_EMPTY_PASSWORD=yes
+  airflow-scheduler:
+    build:
+      dockerfile: ./docker/airflow-scheduler/Dockerfile
+    depends_on:
+      - postgresql
+    volumes:
+      - './dags:/opt/bitnami/airflow/dags'
+      - './logs:/opt/bitnami/airflow/logs'
+      - './jobs:/opt/bitnami/airflow/jobs'
+      - './jars:/opt/bitnami/airflow/jars'
+    environment:
+      <<: *airflow-variables
+      AIRFLOW_WEBSERVER_HOST: airflow
+  airflow:
+    build:
+      dockerfile: ./docker/airflow-webserver/Dockerfile
+    depends_on:
+      - postgresql
+    environment: *airflow-variables
+    ports:
+      - '8080:8080'
+  spark:
+    image: docker.io/bitnami/spark
+    environment:
+      - SPARK_MODE=master
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
+      - SPARK_USER=spark
+    ports:
+      - '9090:8080'
+  spark-worker:
+    image: docker.io/bitnami/spark
+    depends_on:
+      - spark
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark:7077
+      - SPARK_WORKER_MEMORY=1G
+      - SPARK_WORKER_CORES=1
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
+      - SPARK_USER=spark
+  database:
+    image: docker.io/bitnami/mysql
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_ROOT_USER=admin
+      - MYSQL_ROOT_PASSWORD=admin
+      - MYSQL_DATABASE=olist
+    ports:
+      - '3306:3306'
+    volumes:
+      - 'mysql_data:/bitnami/mysql'
+
+volumes:
+  postgresql_data:
+    driver: local
+  mysql_data:
+    driver: local
