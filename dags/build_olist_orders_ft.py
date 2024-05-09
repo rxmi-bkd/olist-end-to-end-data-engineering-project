@@ -61,4 +61,16 @@ build_orders_header_ft = SparkSubmitOperator(task_id='build_orders_header_ft',
                                                    'spark.hadoop.fs.s3a.connection.ssl.enabled': 'false',
                                                    'spark.hadoop.fs.s3a.impl': 'org.apache.hadoop.fs.s3a.S3AFileSystem'})
 
-build_customers_dim >> build_dates_dim >> build_sellers_dim >> build_products_dim >> build_orders_header_ft
+build_orders_detail_ft = SparkSubmitOperator(task_id='build_orders_detail_ft',
+                                             conn_id='spark-conn',
+                                             application='/opt/bitnami/airflow/jobs/build_orders_detail_ft.py',
+                                             dag=dag,
+                                             jars='/opt/bitnami/airflow/jars/aws-java-sdk-bundle-1.12.262.jar,/opt/bitnami/airflow/jars/hadoop-aws-3.3.4.jar,/opt/bitnami/airflow/jars/mysql-connector-j-8.4.0.jar',
+                                             conf={'spark.hadoop.fs.s3a.access.key': 'admin',
+                                                   'spark.hadoop.fs.s3a.secret.key': 'adminadmin',
+                                                   'spark.hadoop.fs.s3a.endpoint': 'http://minio:9000',
+                                                   'spark.hadoop.fs.s3a.path.style.access': 'true',
+                                                   'spark.hadoop.fs.s3a.connection.ssl.enabled': 'false',
+                                                   'spark.hadoop.fs.s3a.impl': 'org.apache.hadoop.fs.s3a.S3AFileSystem'})
+
+build_customers_dim >> build_dates_dim >> build_sellers_dim >> build_products_dim >> build_orders_header_ft >> build_orders_detail_ft
