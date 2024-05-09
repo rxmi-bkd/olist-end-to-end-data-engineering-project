@@ -75,7 +75,15 @@ services:
       - '3306:3306'
     volumes:
       - 'mysql_data:/bitnami/mysql'
-
+  minio:
+    image: 'bitnami/minio:latest'
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    environment:
+      - MINIO_DEFAULT_BUCKETS=olist
+      - MINIO_ROOT_USER=admin
+      - MINIO_ROOT_PASSWORD=adminadmin
 volumes:
   postgresql_data:
     driver: local

@@ -15,4 +15,4 @@ spark_job = SparkSubmitOperator(task_id='spark_job', conn_id='spark-conn',
 
 end = PythonOperator(task_id='end', python_callable=lambda: print('Jobs completed successfully'), dag=dag)
 
-start >> end
+start >> spark_job >> end
