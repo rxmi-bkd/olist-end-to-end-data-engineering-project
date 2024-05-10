@@ -2,28 +2,47 @@
 
 TODO : setup data warehouse with airflow each time the pipeline is run
 
-## Project Description
+## Description
 
-...
+### Architecture
 
-## Project Structure
+<img src="images/olist-architecture.drawio.svg">
 
-```
-olist-sales-ft
-│   dags/
-│   docker/
-│   jars/
-│   jobs/
-│   logs/
-│   .gitignore
-│   compose.yaml
-│   data-warehouse.sql
-│   README.md
-```
+### Pipeline
 
-## Project Setup
+ETL stands for Extract, Transform, Load. An ETL pipeline is a set of processes used to collect data from various
+sources, transform it into a format that is suitable for analysis or storage, and then load it into a target
+destination, such as a database, data warehouse, or data lake.
 
-### 1) Build and run compose file
+In this project, we focusing on generating an orders fact table from the dataset provided
+by [Olist](https://www.kaggle.com/olistbr/brazilian-ecommerce) in order to analyze the sales performance of the company.
+
+<table>
+    <tr>
+        <th>Component</th>
+        <th>Usage</th>
+    </tr>
+    <tr>
+        <td>Minio</td>
+        <td>Minio serves as the data lake where raw data is stored before being processed.</td>
+    </tr>
+    <tr>
+        <td>Airflow</td>
+        <td>Airflow is used to orchestrate the ETL pipeline.</td>
+    </tr>
+    <tr>
+        <td>Spark & Python</td>
+        <td>PySpark is used to process the raw data and generate the orders fact table.</td>
+    </tr>
+    <tr>
+        <td>MySQL</td>
+        <td>MySQL is used as the data warehouse where the orders fact table is stored.</td>
+    </tr>
+</table>
+
+## Setup
+
+### 1) Setup docker
 
 ```bash
 docker-compose up
@@ -65,7 +84,7 @@ this [guide](https://airflow.apache.org/docs/apache-airflow/stable/howto/connect
   </tr>
 </table>
 
-### 3) Upload [dataset](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce) to datalake
+### 4) Upload [dataset](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce) to datalake
 
 use [minio web interface](http://localhost:9000) to upload dataset into olist bucket
 <table>
@@ -79,7 +98,7 @@ use [minio web interface](http://localhost:9000) to upload dataset into olist bu
   </tr>
 </table>
 
-### 4) Download jars
+### 5) Download jars
 
 download the following jars and place them in the jars folder
 
