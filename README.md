@@ -1,4 +1,4 @@
-# olist-sales-ft
+# olist-end-to-end-data-engineering-project
 
 TODO : setup data warehouse with airflow each time the pipeline is run
 
@@ -39,6 +39,32 @@ by [Olist](https://www.kaggle.com/olistbr/brazilian-ecommerce) in order to analy
         <td>MySQL is used as the data warehouse where the orders fact table is stored.</td>
     </tr>
 </table>
+
+## Structure
+
+```
+.
+├── README.md
+├── data-warehouse.sql
+├── compose.yaml
+├── .gitignore
+├── logs
+│   └── ...
+├── docker
+├── dags
+│   └── build_olist_orders_ft.py
+├── jobs
+│   ├── build_customers_dim.py
+│   ├── build_dates_dim.py
+│   ├── build_orders_detail_ft.py
+│   ├── build_orders_header_ft.py
+│   ├── build_products_dim.py
+│   └── build_sellers_dim.py
+└── jars
+    ├── hadoop-aws-3.3.4.jar
+    ├── aws-java-sdk-bundle-1.12.262.jar
+    └── mysql-connector-java-8.4.0.jar
+```
 
 ## Setup
 
