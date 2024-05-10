@@ -1,4 +1,4 @@
-# olist-sales-ft
+# olist-end-to-end-data-engineering-project
 
 TODO : setup data warehouse with airflow each time the pipeline is run
 
