@@ -89,7 +89,7 @@ create table orders_detail_fact
 dag = DAG(dag_id='build_olist_orders_ft',
           description='Build Olist orders fact table using Spark',
           default_args={'owner': 'rami boukadida', 'start_date': airflow.utils.dates.days_ago(1)},
-          schedule_interval='@daily')
+          schedule_interval='@once')
 
 conf = {'spark.hadoop.fs.s3a.access.key': 'admin',
         'spark.hadoop.fs.s3a.secret.key': 'adminadmin',
