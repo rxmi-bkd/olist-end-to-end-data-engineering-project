@@ -2,9 +2,13 @@
 
 ## Description
 
-### Architecture
+### Infrastructure
 
 <img src="images/olist-architecture.drawio.svg">
+
+### Data warehouse
+
+<img src="images/olist_dw.png">
 
 ### Pipeline
 
