@@ -76,7 +76,7 @@ docker-compose up
 
 run ```data-warehouse.sql``` script in mysql container
 
-### 3) Setup spark connection in [airflow](http://localhost:8080/home)
+### 3) Setup Spark and MySQL connection in [airflow](http://localhost:8080/home)
 
 follow
 this [guide](https://airflow.apache.org/docs/apache-airflow/stable/howto/connection.html#creating-a-connection-with-the-ui)
@@ -90,6 +90,9 @@ this [guide](https://airflow.apache.org/docs/apache-airflow/stable/howto/connect
     <th>Airflow password</th>
     <td>admin</td>
   </tr>
+</table>
+
+<table>
   <tr>
     <th>Connection Id</th>
     <td>spark-conn</td>
@@ -106,6 +109,33 @@ this [guide](https://airflow.apache.org/docs/apache-airflow/stable/howto/connect
     <th>Port</th>
     <td>7077</td>
   </tr>
+</table>
+
+<table>
+    <tr>
+        <th>Connection Id</th>
+        <td>mysql-conn</td>
+    </tr>
+    <tr>
+        <th>Connection Type</th>
+        <td>mysql</td>
+    </tr>
+    <tr>
+        <th>MySQL login</th>
+        <td>admin</td>
+    </tr>
+    <tr>
+        <th>MySQL password</th>
+        <td>admin</td>
+    </tr>
+    <tr>
+        <th>Host</th>
+        <td>database</td>
+    </tr>
+    <tr>
+        <th>Port</th>
+        <td>3306</td>
+    </tr>
 </table>
 
 ### 4) Upload [dataset](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce) to datalake

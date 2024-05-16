@@ -1,4 +1,5 @@
-use olist;
+use
+olist;
 
 drop table if exists orders_header_fact;
 drop table if exists orders_detail_fact;
@@ -38,25 +39,25 @@ create table products_dim
 (
     product_id                 varchar(255) null,
     product_category_name      varchar(255) null,
-    product_name_lenght        int          null,
-    product_description_lenght int          null,
-    product_photos_qty         int          null,
-    product_weight_g           int          null,
-    product_length_cm          int          null,
-    product_height_cm          int          null,
-    product_width_cm           int          null,
+    product_name_lenght        int null,
+    product_description_lenght int null,
+    product_photos_qty         int null,
+    product_weight_g           int null,
+    product_length_cm          int null,
+    product_height_cm          int null,
+    product_width_cm           int null,
     product_key                int auto_increment primary key
 );
 
 create table orders_header_fact
 (
-    nb_items      int    null,
-    total_price   double null,
+    nb_items     int null,
+    total_price double null,
     total_freight double null,
-    total_order   double null,
-    customer_key  int    null,
-    date_order    varchar(8),
-    order_id      varchar(255),
+    total_order double null,
+    customer_key int null,
+    date_order   varchar(8),
+    order_id     varchar(255),
     primary key (order_id),
     foreign key (date_order) references dates_dim (date_key),
     foreign key (customer_key) references customers_dim (customer_key)
@@ -64,8 +65,8 @@ create table orders_header_fact
 
 create table orders_detail_fact
 (
-    price         double     null,
-    freight_value double     null,
+    price double null,
+    freight_value double null,
     order_date    varchar(8) null,
     customer_key  int,
     product_key   int,

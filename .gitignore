@@ -316,3 +316,6 @@ cython_debug/
 .idea/
 
 .DS_Store
+jars/aws-java-sdk-bundle-1.12.262.jar
+jars/hadoop-aws-3.3.4.jar
+jars/mysql-connector-j-8.4.0.jar
