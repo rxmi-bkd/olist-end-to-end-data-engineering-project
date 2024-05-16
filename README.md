@@ -38,32 +38,6 @@ by [Olist](https://www.kaggle.com/olistbr/brazilian-ecommerce) in order to analy
     </tr>
 </table>
 
-## Structure
-
-```
-.
-├── README.md
-├── data-warehouse.sql
-├── compose.yaml
-├── .gitignore
-├── logs
-│   └── ...
-├── docker
-├── dags
-│   └── build_olist_orders_ft.py
-├── jobs
-│   ├── build_customers_dim.py
-│   ├── build_dates_dim.py
-│   ├── build_orders_detail_ft.py
-│   ├── build_orders_header_ft.py
-│   ├── build_products_dim.py
-│   └── build_sellers_dim.py
-└── jars
-    ├── hadoop-aws-3.3.4.jar
-    ├── aws-java-sdk-bundle-1.12.262.jar
-    └── mysql-connector-java-8.4.0.jar
-```
-
 ## Setup
 
 ### 1) Setup docker
@@ -72,11 +46,7 @@ by [Olist](https://www.kaggle.com/olistbr/brazilian-ecommerce) in order to analy
 docker-compose up
 ```
 
-### 2) Setup data warehouse
-
-run ```data-warehouse.sql``` script in mysql container
-
-### 3) Setup Spark and MySQL connection in [airflow](http://localhost:8080/home)
+### 2) Setup Spark and MySQL connection in [airflow](http://localhost:8080/home)
 
 follow
 this [guide](https://airflow.apache.org/docs/apache-airflow/stable/howto/connection.html#creating-a-connection-with-the-ui)
@@ -138,7 +108,7 @@ this [guide](https://airflow.apache.org/docs/apache-airflow/stable/howto/connect
     </tr>
 </table>
 
-### 4) Upload [dataset](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce) to datalake
+### 3) Upload [dataset](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce) to datalake
 
 use [minio web interface](http://localhost:9000) to upload dataset into olist bucket
 <table>
@@ -152,7 +122,7 @@ use [minio web interface](http://localhost:9000) to upload dataset into olist bu
   </tr>
 </table>
 
-### 5) Download jars
+### 4) Download jars
 
 download the following jars and place them in the jars folder
 
