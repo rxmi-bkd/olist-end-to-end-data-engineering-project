@@ -236,3 +236,7 @@ used to connect to data warehouse
 
 [hadoop-aws](https://repo.maven.apache.org/maven2/org/apache/hadoop/hadoop-aws/3.3.4/hadoop-aws-3.3.4.jar) & [aws-java-sdk](https://repo.maven.apache.org/maven2/com/amazonaws/aws-java-sdk-bundle/1.12.262/aws-java-sdk-bundle-1.12.262.jar) >>
 used to connect to datalake
+
+## Possible Improvements
+
+For the moment, our orders fact table pipeline is designed to be recreated every time we run the ETL pipeline. This is a simple approach that works well for small datasets. However, as the dataset grows, we may need to consider incremental updates to the fact table to improve performance. This can be achieved by using set substractions to identify new records and append them to the fact table.
