@@ -239,4 +239,4 @@ used to connect to datalake
 
 ## Possible Improvements
 
-For the moment, our orders fact table pipeline is designed to be recreated every time we run the ETL pipeline. This is a simple approach that works well for small datasets. However, as the dataset grows, we may need to consider incremental updates to the fact table to improve performance. This can be achieved by using set substractions to identify new records and append them to the fact table.
+For the moment, our orders fact table pipeline is designed to recreate tables every time the pipeline is run. This is not ideal for a production environment, where we would want to update the tables incrementally. 
