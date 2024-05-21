@@ -46,99 +46,46 @@ With these tables, we can analyze the sales performance of the company. For exam
 value.
 
 ```sql
-select
-    year, 
-    month, 
-    avg (total_price) as avg_total_price, 
-    avg (total_freight) as avg_total_freight, 
-    avg (total_order) as avg_total_order
-from orders_header_fact ohf join dates_dim dd
-on ohf.date_order = dd.date_key
-group by dd.year, dd.month
-order by dd.year, dd.month;
+select year(order_date)   as year,
+       month(order_date)  as month,
+       avg(price)         as avg_price,
+       avg(freight_value) as avg_freight_value,
+       avg(price + freight_value) as avg_total_value
+from orders_fact
+group by year, month
+order by year, month;
 
 +------+-------+------------------+-------------------+------------------+
 | year | month | avg_total_price  | avg_total_freight | avg_total_order  |
 +------+-------+------------------+-------------------+------------------+
-| 2016 | 9     | 89.12            | 29.13             | 118.25           |
-| 2016 | 10    | 160.739          | 23.705            | 184.444          |
+| 2016 | 9     | 44.56            | 14.57             | 59.13            |
+| 2016 | 10    | 136.38           | 20.11             | 156.50           |
 | 2016 | 12    | 10.9             | 8.72              | 19.62            |
-| 2017 | 1     | 152.488          | 21.389            | 173.876          |
-| 2017 | 2     | 142.702          | 22.491            | 165.194          |
-| 2017 | 3     | 141.743          | 21.849            | 163.593          |
-| 2017 | 4     | 150.534          | 21.955            | 172.489          |
-| 2017 | 5     | 138.271          | 21.891            | 160.161          |
-| 2017 | 6     | 134.609          | 21.736            | 156.345          |
-| 2017 | 7     | 125.480          | 21.905            | 147.385          |
-| 2017 | 8     | 133.699          | 21.950            | 155.650          |
-| 2017 | 9     | 147.160          | 22.625            | 169.785          |
-| 2017 | 10    | 145.407          | 23.006            | 168.413          |
-| 2017 | 11    | 135.589          | 22.664            | 158.253          |
-| 2017 | 12    | 132.275          | 21.272            | 153.547          |
-| 2018 | 1     | 131.583          | 21.783            | 153.366          |
-| 2018 | 2     | 126.110          | 21.322            | 147.432          |
-| 2018 | 3     | 136.785          | 23.917            | 160.702          |
-| 2018 | 4     | 143.733          | 23.515            | 167.248          |
-| 2018 | 5     | 145.413          | 22.365            | 167.778          |
-| 2018 | 6     | 140.442          | 25.577            | 166.019          |
-| 2018 | 7     | 142.756          | 26.020            | 168.775          |
-| 2018 | 8     | 132.468          | 23.035            | 155.503          |
-| 2018 | 9     | 145.000          | 21.460            | 166.460          |
+| 2017 | 1     | 125.98           | 17.67             | 143.65           |
+| 2017 | 2     | 126.76           | 19.98             | 146.74           |
+| 2017 | 3     | 124.78           | 19.23             | 144.02           |
+| 2017 | 4     | 134.10           | 19.56             | 153.66           |
+| 2017 | 5     | 122.36           | 19.37             | 141.73           |
+| 2017 | 6     | 120.86           | 19.52             | 140.37           |
+| 2017 | 7     | 110.21           | 19.24             | 129.45           |
+| 2017 | 8     | 116.90           | 19.19             | 136.09           |
+| 2017 | 9     | 129.25           | 19.87             | 149.12           |
+| 2017 | 10    | 124.81           | 19.75             | 144.55           |
+| 2017 | 11    | 116.59           | 19.49             | 136.08           |
+| 2017 | 12    | 117.93           | 18.97             | 136.90           |
+| 2018 | 1     | 115.74           | 19.16             | 134.91           |
+| 2018 | 2     | 110.03           | 18.60             | 128.64           |
+| 2018 | 3     | 119.66           | 20.92             | 140.58           |
+| 2018 | 4     | 124.97           | 20.45             | 145.42           |
+| 2018 | 5     | 125.74           | 19.34             | 145.08           |
+| 2018 | 6     | 122.23           | 22.26             | 144.49           |
+| 2018 | 7     | 126.27           | 23.01             | 149.28           |
+| 2018 | 8     | 117.92           | 20.51             | 138.43           |
+| 2018 | 9     | 145.00           | 21.46             | 166.46           |
 +------+-------+------------------+-------------------+------------------+
 ```
 
 A lot of other questions can be answered using this dataset. But we need to build other facts tables to answer them.
-
-### Some examples of questions that can be answered using this dataset
-
-#### <ins>Customer Insights</ins>
-
-1. **Who are our most valuable customers?**
-
-2. **What is the geographic distribution of our customers?**
-
-3. **What factors influence customer satisfaction?**
-
-#### <ins>Sales and Revenue Analysis</ins>
-
-4. **What are our best-selling products?**
-
-5. **How does seasonality affect our sales?**
-
-6. **What is the average order value (AOV)?**
-
-#### <ins>Operational Efficiency</ins>
-
-7. **How efficient are our delivery processes?**
-
-8. **What is the impact of shipping delays on customer satisfaction?**
-
-9. **What are the common reasons for order cancellations or returns?**
-
-#### <ins>Product and Inventory Management</ins>
-
-10. **What products have the highest return rates?**
-
-11. **How should we manage inventory for different products?**
-
-#### <ins>Marketing and Promotions</ins>
-
-12. **Which marketing channels are most effective?**
-
-13. **What types of promotions increase sales?**
-
-#### <ins>Seller Performance</ins>
-
-14. **Who are our top-performing sellers?**
-
-15. **What factors contribute to seller success on the platform?**
-
-#### <ins>Financial Metrics</ins>
-
-16. **What is our overall revenue and profit margin?**
-
-17. **How does payment method affect sales?**
-
 By exploring these questions, you can gain valuable insights into customer behavior, operational efficiency, product
 performance, and overall business health. This can help in making data-driven decisions to improve various aspects of
 the e-commerce operation.
